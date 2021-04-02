@@ -70,14 +70,14 @@ Describe "Docker" {
         $testCases = (Get-ToolsetContent).docker.images | ForEach-Object { @{ ImageName = $_ } }
 
         It "<ImageName>" -TestCases $testCases {
-           sudo docker images "$ImageName" --format "{{.Repository}}" | Should -Not -BeNullOrEmpty
+            sudo docker images "$ImageName" --format "{{.Repository}}" | Should -Not -BeNullOrEmpty
         }
     }
 }
 
 Describe "Docker-compose" {
     It "docker-compose" {
-        "docker-compose --version"| Should -ReturnZeroExitCode
+        "docker-compose --version" | Should -ReturnZeroExitCode
     }
 }
 
@@ -92,7 +92,7 @@ Describe "Bazel" {
         @{ ToolName = "bazel" }
         @{ ToolName = "bazelisk" }
     ) {
-        "$ToolName --version"| Should -ReturnZeroExitCode
+        "$ToolName --version" | Should -ReturnZeroExitCode
     }
 }
 
@@ -364,8 +364,7 @@ Describe "Ruby" {
         @{gemName = $_.name}
     }
 
-    if ($gemTestCases)
-    {
+    if ($gemTestCases) {
         It "Gem <gemName> is installed" -TestCases $gemTestCases {
             "gem list -i '^$gemName$'" | Should -MatchCommandOutput "true"
         }

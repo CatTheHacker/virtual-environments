@@ -244,20 +244,20 @@ function Get-PHPUnitVersion {
 
 function Build-PHPTable {
     $php = @{
-        "Tool" = "PHP"
+        "Tool"    = "PHP"
         "Version" = "$(Get-PHPVersions -Join '<br>')"
     }
     $composer = @{
-        "Tool" = "Composer"
+        "Tool"    = "Composer"
         "Version" = Get-ComposerVersion
     }
     $phpunit = @{
-        "Tool" = "PHPUnit"
+        "Tool"    = "PHPUnit"
         "Version" = Get-PHPUnitVersion
     }
     return @($php, $composer, $phpunit) | ForEach-Object {
         [PSCustomObject] @{
-            "Tool" = $_.Tool
+            "Tool"    = $_.Tool
             "Version" = $_.Version
         }
     }
@@ -300,7 +300,7 @@ function Get-StackVersion {
 }
 
 function Get-AzModuleVersions {
-    $azModuleVersions = Get-ChildItem /usr/share | Where-Object { $_ -match "az_\d+" } | Foreach-Object {
+    $azModuleVersions = Get-ChildItem /usr/share | Where-Object { $_ -match "az_\d+" } | ForEach-Object {
         $_.Name.Split("_")[1]
     }
 
@@ -317,7 +317,7 @@ function Get-PowerShellModules {
         $moduleVersions = ($_.group.Version | Sort-Object -Unique) -join '<br>'
 
         [PSCustomObject]@{
-            Module = $moduleName
+            Module  = $moduleName
             Version = $moduleVersions
         }
     }
@@ -341,8 +341,8 @@ function Get-CachedDockerImagesTableData {
         $parts = $_.Split("|")
         [PSCustomObject] @{
             "Repository:Tag" = $parts[0]
-            "Digest" = $parts[1]
-            "Created" = $parts[2].split(' ')[0]
+            "Digest"         = $parts[1]
+            "Created"        = $parts[2].split(' ')[0]
         }
     } | Sort-Object -Property "Repository:Tag"
 }
@@ -372,7 +372,7 @@ function Get-PipxVersion {
 }
 
 function Get-GraalVMVersion {
-    $version = & "$env:GRAALVM_11_ROOT\bin\java" --version | Select-String -Pattern "GraalVM" | Take-OutputPart -Part 5,6
+    $version = & "$env:GRAALVM_11_ROOT\bin\java" --version | Select-String -Pattern "GraalVM" | Take-OutputPart -Part 5, 6
     return $version
 }
 
@@ -381,7 +381,7 @@ function Build-GraalVMTable {
     $envVariables = "GRAALVM_11_ROOT"
 
     return [PSCustomObject] @{
-        "Version" = $version
+        "Version"               = $version
         "Environment variables" = $envVariables
     }
 }
@@ -389,16 +389,16 @@ function Build-GraalVMTable {
 function Build-PackageManagementEnvironmentTable {
     return @(
         @{
-            "Name" = "CONDA"
+            "Name"  = "CONDA"
             "Value" = $env:CONDA
         },
         @{
-            "Name" = "VCPKG_INSTALLATION_ROOT"
+            "Name"  = "VCPKG_INSTALLATION_ROOT"
             "Value" = $env:VCPKG_INSTALLATION_ROOT
         }
     ) | ForEach-Object {
         [PSCustomObject] @{
-            "Name" = $_.Name
+            "Name"  = $_.Name
             "Value" = $_.Value
         }
     }
