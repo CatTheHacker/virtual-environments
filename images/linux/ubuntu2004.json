@@ -32,6 +32,7 @@
             "type": "docker",
             "image": "packer-base:20.04",
             "discard": false,
+            "commit": true,
             "pull": false,
             "privileged": true,
             "volumes": {
