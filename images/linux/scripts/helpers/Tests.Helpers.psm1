@@ -22,7 +22,7 @@ function Invoke-PesterTests {
     }
     
     $configuration = [PesterConfiguration] @{
-        Run = @{ Path = $testPath; PassThru = $true }
+        Run    = @{ Path = $testPath; PassThru = $true }
         Output = @{ Verbosity = "Detailed" }
     }
     if ($TestName) {
@@ -54,8 +54,7 @@ function ShouldReturnZeroExitCode {
     [bool]$succeeded = $result.ExitCode -eq 0
     if ($Negate) { $succeeded = -not $succeeded }
 
-    if (-not $succeeded)
-    {
+    if (-not $succeeded) {
         $commandOutputIndent = " " * 4
         $commandOutput = ($result.Output | ForEach-Object { "${commandOutputIndent}${_}" }) -join "`n"
         $failureMessage = "Command '${ActualValue}' has finished with exit code`n${commandOutput}"

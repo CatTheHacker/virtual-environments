@@ -5,18 +5,18 @@ function Get-BashVersion {
 
 function Get-CPPVersions {
     $result = Get-CommandResult "apt list --installed" -Multiline
-    $cppVersions = $result.Output | Where-Object { $_ -match "g\+\+-\d+"} | ForEach-Object {
+    $cppVersions = $result.Output | Where-Object { $_ -match "g\+\+-\d+" } | ForEach-Object {
         & $_.Split("/")[0] --version | Select-Object -First 1 | Take-OutputPart -Part 3
-    } | Sort-Object {[Version]$_}
+    } | Sort-Object { [Version]$_ }
     return "GNU C++ " + ($cppVersions -Join ", ")
 }
 
 function Get-FortranVersions {
     $result = Get-CommandResult "apt list --installed" -Multiline
-    $fortranVersions = $result.Output | Where-Object { $_ -match "^gfortran-\d+"} | ForEach-Object {
+    $fortranVersions = $result.Output | Where-Object { $_ -match "^gfortran-\d+" } | ForEach-Object {
         $_ -match "now (?<version>\d+\.\d+\.\d+)-" | Out-Null
         $Matches.version
-    } | Sort-Object {[Version]$_}
+    } | Sort-Object { [Version]$_ }
     return "GNU Fortran " + ($fortranVersions -Join ", ")
 }
 
@@ -28,13 +28,13 @@ function Get-ClangToolVersions {
     )
 
     $result = Get-CommandResult "apt list --installed" -Multiline
-    $toolVersions = $result.Output | Where-Object { $_ -match "^${ToolName}-\d+"} | ForEach-Object {
+    $toolVersions = $result.Output | Where-Object { $_ -match "^${ToolName}-\d+" } | ForEach-Object {
         $clangCommand = ($_ -Split "/")[0]
         Invoke-Expression "$clangCommand --version" | Where-Object { $_ -match "${ToolName} version" } | ForEach-Object {
             $_ -match "${ToolName} version (?<version>${VersionPattern}" | Out-Null
             $Matches.version
-            }
-        } | Sort-Object {[Version]$_}
+        }
+    } | Sort-Object { [Version]$_ }
 
     return $toolVersions -Join ", "
 }
@@ -45,7 +45,7 @@ function Get-ClangVersions {
 }
 
 function Get-LLVMInfo {
-    $clangVersions = Get-ClangToolVersions -ToolName "clang"
+    #$clangVersions = Get-ClangToolVersions -ToolName "clang"
     $clangFormatVersions = Get-ClangToolVersions -ToolName "clang-format"
     $aptSourceRepo = Get-AptSourceRepository -PackageName "llvm"
     return "LLVM components: Clang $clangFormatVersions, Clang-format $clangFormatVersions (apt source: $aptSourceRepo)"
@@ -226,7 +226,7 @@ function Get-SbtVersion {
 
 function Get-PHPVersions {
     $result = Get-CommandResult "apt list --installed" -Multiline
-    return $result.Output | Where-Object { $_ -match "^php\d+\.\d+/"} | ForEach-Object {
+    return $result.Output | Where-Object { $_ -match "^php\d+\.\d+/" } | ForEach-Object {
         $_ -match "now (?<version>\d+\.\d+\.\d+)-" | Out-Null
         $Matches.version
     }

@@ -18,8 +18,8 @@ function Get-AndroidInstalledPackages {
     $androidSDKManagerPath = Get-AndroidSDKManagerPath
     $androidSDKManagerList = Invoke-Expression "$androidSDKManagerPath --list --include_obsolete"
     $androidInstalledPackages = @()
-    foreach($packageInfo in $androidSDKManagerList) {
-        if($packageInfo -Match "Available Packages:") {
+    foreach ($packageInfo in $androidSDKManagerList) {
+        if ($packageInfo -Match "Available Packages:") {
             break
         }
 
@@ -87,7 +87,7 @@ function Build-AndroidTable {
     ) | Where-Object { $_.Version } | ForEach-Object {
         [PSCustomObject] @{
             "Package Name" = $_.Package
-            "Version" = $_.Version
+            "Version"      = $_.Version
         }
     }
 }
@@ -166,8 +166,8 @@ function Build-AndroidEnvironmentTable {
     $shouldResolveLink = 'ANDROID_NDK_PATH', 'ANDROID_NDK_HOME', 'ANDROID_NDK_ROOT', 'ANDROID_NDK_LATEST_HOME'
     return $androidVersions | Sort-Object -Property Name | ForEach-Object {
         [PSCustomObject] @{
-            "Name" = $_.Name
-            "Value" = if ($shouldResolveLink.Contains($_.Name )) { Get-PathWithLink($_.Value) } else {$_.Value}
+            "Name"  = $_.Name
+            "Value" = if ($shouldResolveLink.Contains($_.Name )) { Get-PathWithLink($_.Value) } else { $_.Value }
         }
     }
 }

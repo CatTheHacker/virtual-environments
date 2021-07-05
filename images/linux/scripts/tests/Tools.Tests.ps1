@@ -97,7 +97,7 @@ Describe "Bazel" {
 }
 
 Describe "clang" {
-    [array]$testCases = (Get-ToolsetContent).clang.Versions | ForEach-Object { @{ClangVersion = $_} }
+    [array]$testCases = (Get-ToolsetContent).clang.Versions | ForEach-Object { @{ClangVersion = $_ } }
 
     It "clang <ClangVersion>" -TestCases $testCases {
         param (
@@ -116,7 +116,7 @@ Describe "Cmake" {
 }
 
 Describe "erlang" {
-    $testCases = @("erl -version", "erlc -v", "rebar3 -v") | ForEach-Object { @{ErlangCommand = $_} }
+    $testCases = @("erl -version", "erlc -v", "rebar3 -v") | ForEach-Object { @{ErlangCommand = $_ } }
 
     It "erlang <ErlangCommand>" -TestCases $testCases {
         param (
@@ -128,7 +128,7 @@ Describe "erlang" {
 }
 
 Describe "gcc" {
-    [array]$testCases = (Get-ToolsetContent).gcc.Versions | ForEach-Object { @{GccVersion = $_} }
+    [array]$testCases = (Get-ToolsetContent).gcc.Versions | ForEach-Object { @{GccVersion = $_ } }
 
     It "gcc <GccVersion>" -TestCases $testCases {
         param (
@@ -140,7 +140,7 @@ Describe "gcc" {
 }
 
 Describe "gfortran" {
-    [array]$testCases = (Get-ToolsetContent).gfortran.Versions | ForEach-Object { @{GfortranVersion = $_} }
+    [array]$testCases = (Get-ToolsetContent).gfortran.Versions | ForEach-Object { @{GfortranVersion = $_ } }
 
     It "gfortran <GfortranVersion>" -TestCases $testCases {
         param (
@@ -240,7 +240,7 @@ Describe "Homebrew" {
         $testCases = (Get-ToolsetContent).brew | ForEach-Object { @{ ToolName = $_.name } }
 
         It "<ToolName>" -TestCases $testCases {
-           "$ToolName --version" | Should -Not -BeNullOrEmpty
+            "$ToolName --version" | Should -Not -BeNullOrEmpty
         }
     }
 }
@@ -320,7 +320,7 @@ Describe "GraalVM" -Skip:(-not (Test-IsUbuntu20)) {
 }
 
 Describe "Containers" -Skip:(Test-IsUbuntu16) {
-    $testCases = @("podman", "buildah", "skopeo") | ForEach-Object { @{ContainerCommand = $_} }
+    $testCases = @("podman", "buildah", "skopeo") | ForEach-Object { @{ContainerCommand = $_ } }
 
     It "<ContainerCommand>" -TestCases $testCases {
         param (
@@ -338,7 +338,7 @@ Describe "nvm" {
 }
 
 Describe "Python" {
-    $testCases = @("python", "pip", "python3", "pip3") | ForEach-Object { @{PythonCommand = $_} }
+    $testCases = @("python", "pip", "python3", "pip3") | ForEach-Object { @{PythonCommand = $_ } }
 
     It "<PythonCommand>" -TestCases $testCases {
         param (
@@ -350,7 +350,7 @@ Describe "Python" {
 }
 
 Describe "Ruby" {
-    $testCases = @("ruby", "gem") | ForEach-Object { @{RubyCommand = $_} }
+    $testCases = @("ruby", "gem") | ForEach-Object { @{RubyCommand = $_ } }
 
     It "<RubyCommand>" -TestCases $testCases {
         param (
@@ -361,7 +361,7 @@ Describe "Ruby" {
     }
 
     $gemTestCases = (Get-ToolsetContent).rubygems | ForEach-Object {
-        @{gemName = $_.name}
+        @{gemName = $_.name }
     }
 
     if ($gemTestCases) {

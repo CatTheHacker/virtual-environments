@@ -5,7 +5,8 @@
 ################################################################################
 
 # Source the helpers
-source $HELPER_SCRIPTS/os.sh
+# shellcheck source=/images/linux/scripts/helpers/os.sh
+source "$HELPER_SCRIPTS"/os.sh
 
 REPO_URL="https://repo.mongodb.org/apt/ubuntu"
 

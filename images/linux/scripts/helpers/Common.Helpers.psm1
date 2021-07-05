@@ -160,7 +160,8 @@ function Update-Environment {
         $Name, $Value = $_ -split "="
         if ($Name -eq 'PATH') {
             Set-EnvironmentVariable -Name $Name -Value (Edit-Environment -VariableName PATH -Value $Value -Action ReturnMerge)
-        } else {
+        }
+        else {
             Set-EnvironmentVariable -Name $Name -Value $Value
         }
     }

@@ -19,7 +19,7 @@ apt-get install libpq-dev
 
 rm /etc/apt/sources.list.d/pgdg.list
 
-echo "postgresql $REPO_URL" >>$HELPER_SCRIPTS/apt-sources.txt
+echo "postgresql $REPO_URL" >>"$HELPER_SCRIPTS"/apt-sources.txt
 
 if [[ ! -f /run/systemd/container ]]; then
     # Disable postgresql.service

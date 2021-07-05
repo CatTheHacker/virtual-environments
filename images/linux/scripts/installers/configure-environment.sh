@@ -23,9 +23,9 @@ fi
 
 # Prepare directory and env variable for toolcache
 AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
-mkdir $AGENT_TOOLSDIRECTORY
+mkdir -p "$AGENT_TOOLSDIRECTORY"
 echo "AGENT_TOOLSDIRECTORY=$AGENT_TOOLSDIRECTORY" | tee -a /etc/environment
-chmod -R 777 $AGENT_TOOLSDIRECTORY
+chmod -R 777 "$AGENT_TOOLSDIRECTORY"
 
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
 # https://www.suse.com/support/kb/doc/?id=000016692

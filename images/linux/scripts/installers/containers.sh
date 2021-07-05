@@ -4,7 +4,8 @@
 ##  Desc:  Installs container tools: podman, buildah and skopeo onto the image
 ################################################################################
 
-source $HELPER_SCRIPTS/os.sh
+# shellcheck source=/images/linux/scripts/helpers/os.sh
+source "$HELPER_SCRIPTS"/os.sh
 
 install_packages=(podman buildah skopeo)
 REPO_URL="https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable"
